@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.hp.learnkotlin.ui.DemoInterfaceListener
+import com.hp.learnkotlin.ui.api.retrofit.impl.retro.RetroUI
 import com.hp.learnkotlin.ui.depen.hilt.HiltDemoUI
 import com.hp.learnkotlin.ui.depen.koin.KoinDemoUI
 
@@ -148,6 +149,8 @@ fun LayoutLearn() {
                 HiltDemoUI()
                 Spacer(modifier = Modifier.height(10.dp))
                 KoinDemoUI()
+                Spacer(modifier = Modifier.height(10.dp))
+                RetroUI()
 
             }
 

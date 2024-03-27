@@ -1,5 +1,6 @@
 package com.hp.learnkotlin.ui.depen.hilt
 
+import com.hp.learnkotlin.ui.api.retrofit.RetroApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +15,12 @@ object HiltModule{
     @Provides
     fun getHiltDem() : HiltDemo{
         return HiltDemoImpl()
+    }
+
+    @Singleton
+    @Provides
+    fun getRetroApiService() : RetroApiService{
+        return RetroApiService.createClient()
     }
 
 }
