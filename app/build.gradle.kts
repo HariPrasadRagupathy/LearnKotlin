@@ -82,6 +82,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
+    implementation("androidx.navigation:navigation-compose:2.7.1")
+
 
     // Koin for Android
     implementation("io.insert-koin:koin-androidx-compose:3.5.3")
