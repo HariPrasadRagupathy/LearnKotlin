@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.BottomAppBar
@@ -49,6 +50,7 @@ import androidx.navigation.NavController
 import com.hp.learnkotlin.ui.components.common.CommonSettings
 import com.hp.learnkotlin.ui.compose.addPadding
 import com.hp.learnkotlin.ui.nav.Screens
+import com.hp.learnkotlin.ui.pagger.presentation.UserScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,7 +121,7 @@ fun DemoScreen(navController: NavController) {
                             Icon(Icons.Default.Home, contentDescription = "Home")
                         }
                         IconButton(onClick = { screen = Screens.CallScreen }) {
-                            Icon(Icons.Default.Call, contentDescription = "call")
+                            Icon(Icons.Default.Person, contentDescription = "call")
                         }
                         IconButton(onClick = { screen = Screens.NotificationsScreen }) {
                             Icon(Icons.Default.Notifications, contentDescription = "notification")
@@ -164,7 +166,8 @@ fun DemoScreen(navController: NavController) {
                         DashBoardContent()
                     }
                     Screens.CallScreen -> {
-                        CallContent()
+                        //CallContent()
+                        UserScreen()
                     }
                     Screens.NotificationsScreen -> {
                         NotificationsContent()

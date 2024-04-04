@@ -74,19 +74,35 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.45")
     kapt("com.google.dagger:hilt-compiler:2.45")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    implementation("androidx.navigation:navigation-compose:2.5.3")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
+    //coil
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+
     implementation("androidx.navigation:navigation-compose:2.7.1")
 
 
     // Koin for Android
     implementation("io.insert-koin:koin-androidx-compose:3.5.3")
+
+    //Room database
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
+
+
+    //paging
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+    implementation("androidx.paging:paging-compose:3.3.0-alpha05")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
