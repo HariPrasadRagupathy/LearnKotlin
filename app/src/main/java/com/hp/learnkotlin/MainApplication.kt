@@ -1,6 +1,7 @@
 package com.hp.learnkotlin
 
 import android.app.Application
+import com.hp.learnkotlin.ui.broadcasereceiver.AirPlaneModeReceiver
 import com.hp.learnkotlin.ui.depen.koin.koinModule
 import dagger.hilt.android.HiltAndroidApp
 import org.koin.android.ext.koin.androidContext

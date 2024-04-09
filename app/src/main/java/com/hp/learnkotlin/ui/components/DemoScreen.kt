@@ -1,5 +1,6 @@
 package com.hp.learnkotlin.ui.components
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,10 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,6 +36,7 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
@@ -38,6 +44,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,8 +52,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.hp.learnkotlin.ui.broadcasereceiver.BroadCastViewModel
 import com.hp.learnkotlin.ui.components.common.CommonSettings
 import com.hp.learnkotlin.ui.compose.addPadding
 import com.hp.learnkotlin.ui.nav.Screens
@@ -61,6 +71,7 @@ fun DemoScreen(navController: NavController) {
     }
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -160,6 +171,15 @@ fun DemoScreen(navController: NavController) {
                 }
             }
         ) { innerPadding ->
+            Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors()) {
+
+            }
+            Surface {
+
+            }
+            Card {
+
+            }
             Column(modifier = Modifier.padding(innerPadding.addPadding(5.dp))) {
                 when (screen) {
                     Screens.HomeScreen -> {
@@ -181,7 +201,18 @@ fun DemoScreen(navController: NavController) {
 
 @Composable
 fun DashBoardContent() {
-    Text(text = "Dashboard")
+    val vm : BroadCastViewModel = hiltViewModel()
+    val data by vm.liveData.observeAsState(initial = "loading")
+    val context = LocalContext.current
+    Column {
+
+    Text(text = data)
+        Button(onClick = {
+            context.sendBroadcast(Intent("TEST_ACTION"))
+        }) {
+            Text("Trigger")
+        }
+    }
 }
 
 @Composable

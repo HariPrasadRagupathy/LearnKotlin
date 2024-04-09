@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.hp.learnkotlin.ui.broadcasereceiver.BroadCastUIReceiver
+import com.hp.learnkotlin.ui.broadcasereceiver.BroadCastUISender
 import com.hp.learnkotlin.ui.components.common.CommonSettings
 import com.hp.learnkotlin.ui.compose.addPadding
 
@@ -35,6 +37,8 @@ fun SettingsScreen(navController: NavController) {
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding.addPadding(5.dp))) {
             Text("Settings Screen")
+            BroadCastUISender()
+            BroadCastUIReceiver()
         }
     }
 }
