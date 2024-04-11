@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Call
@@ -50,9 +52,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -61,6 +65,8 @@ import com.hp.learnkotlin.ui.components.common.CommonSettings
 import com.hp.learnkotlin.ui.compose.addPadding
 import com.hp.learnkotlin.ui.nav.Screens
 import com.hp.learnkotlin.ui.pagger.presentation.UserScreen
+import com.hp.learnkotlin.ui.theme.CustomTheme
+import com.hp.learnkotlin.ui.theme.LearnKotlinTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -185,13 +191,16 @@ fun DemoScreen(navController: NavController) {
                     Screens.HomeScreen -> {
                         DashBoardContent()
                     }
+
                     Screens.CallScreen -> {
                         //CallContent()
                         UserScreen()
                     }
+
                     Screens.NotificationsScreen -> {
                         NotificationsContent()
                     }
+
                     else -> {}
                 }
             }
@@ -199,21 +208,59 @@ fun DemoScreen(navController: NavController) {
     }
 }
 
+
 @Composable
 fun DashBoardContent() {
-    val vm : BroadCastViewModel = hiltViewModel()
+    val vm: BroadCastViewModel = hiltViewModel()
     val data by vm.liveData.observeAsState(initial = "loading")
     val context = LocalContext.current
+
+    val customColors = CustomTheme.colors
+
     Column {
 
-    Text(text = data)
-        Button(onClick = {
-            context.sendBroadcast(Intent("TEST_ACTION"))
-        }) {
+        Text(text = data)
+        Spacer(modifier = Modifier.height(CustomTheme.spacing.spaceM))
+        Button(
+            onClick = {
+                context.sendBroadcast(Intent("TEST_ACTION"))
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = CustomTheme.colors.primary,
+                contentColor = CustomTheme.colors.onPrimary
+            )
+        ) {
             Text("Trigger")
         }
+        Spacer(modifier = Modifier.height(CustomTheme.spacing.spaceM))
+        GradBox()
     }
 }
+
+
+@Composable
+fun GradBox() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)
+            .background(
+                Brush.horizontalGradient(CustomTheme.colors.backGroundGradientColor),
+                shape = RoundedCornerShape(CustomTheme.spacing.spaceM)
+            )
+    ) {
+        Text("Heello")
+    }
+}
+
+@Preview
+@Composable
+fun PreviewGradBox() {
+    LearnKotlinTheme {
+        GradBox()
+    }
+}
+
 
 @Composable
 fun CallContent() {

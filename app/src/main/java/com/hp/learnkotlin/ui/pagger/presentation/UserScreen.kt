@@ -17,9 +17,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,11 +37,14 @@ import coil.compose.AsyncImage
 import com.hp.learnkotlin.ui.pagger.domain.User
 import com.hp.learnkotlin.ui.theme.LearnKotlinTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserScreen(
     userViewModel: UserViewModel = hiltViewModel()
 ) {
     val users: LazyPagingItems<User> = userViewModel.userPagingFlow.collectAsLazyPagingItems()
+    val searchText by userViewModel.searchText.collectAsState()
+    val isSearching by userViewModel.isSearching.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(key1 = users.loadState, block = {
@@ -49,27 +56,29 @@ fun UserScreen(
             ).show()
         }
     })
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        if (users.loadState.refresh is LoadState.Loading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center)
-            )
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(users.itemCount) { userItemIndex ->
-                    users[userItemIndex]?.let { UserItem(user = it) }
-                }
-                item{
-                    if(users.loadState.append is LoadState.Loading){
-                        CircularProgressIndicator()
+    Column(modifier = Modifier.fillMaxSize()) {
+        TextField(value = searchText, onValueChange = userViewModel::onSearchTextChange)
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (users.loadState.refresh is LoadState.Loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    items(users.itemCount) { userItemIndex ->
+                        users[userItemIndex]?.let { UserItem(user = it) }
                     }
-                }
+                    item {
+                        if (users.loadState.append is LoadState.Loading) {
+                            CircularProgressIndicator()
+                        }
+                    }
 
+                }
             }
         }
     }

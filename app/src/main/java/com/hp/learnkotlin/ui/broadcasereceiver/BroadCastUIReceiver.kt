@@ -13,7 +13,7 @@ fun BroadCastUIReceiver(){
 
   val context = LocalContext.current
 
-  MaterialTheme.typography.
+  //MaterialTheme.typography.
 
   val vm : BroadCastViewModel = hiltViewModel()
 

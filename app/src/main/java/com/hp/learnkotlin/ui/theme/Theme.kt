@@ -3,17 +3,21 @@ package com.hp.learnkotlin.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -36,6 +40,21 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
+private val customColors = CustomColors(
+    primary = Color(0xFFf54316),
+    onPrimary = Color(0xFFf5d316),
+    backGroundGradientColor = listOf(Color(0xFFf54316),Color(0xFFf5d316))
+)
+
+private val customSpacing = CustomSpacing(
+    spaceXs =  2.dp,
+    spaceS = 4.dp,
+    spaceM = 6.dp,
+    spaceL = 12.dp,
+    spaceXL = 24.dp
+)
+
 
 @Composable
 fun LearnKotlinTheme(
@@ -62,9 +81,15 @@ fun LearnKotlinTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+
+
+    CompositionLocalProvider(
+        LocalCustomColors provides customColors,
+        LocalCustomSpacing provides customSpacing) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }
