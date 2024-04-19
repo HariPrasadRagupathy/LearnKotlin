@@ -47,6 +47,7 @@ fun UserScreen(
     val isSearching by userViewModel.isSearching.collectAsState()
     val context = LocalContext.current
 
+
     LaunchedEffect(key1 = users.loadState, block = {
         if (users.loadState.refresh is LoadState.Error) {
             Toast.makeText(

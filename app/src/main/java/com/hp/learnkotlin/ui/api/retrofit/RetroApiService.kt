@@ -1,5 +1,6 @@
 package com.hp.learnkotlin.ui.api.retrofit
 
+import android.util.Log
 import com.hp.learnkotlin.ui.api.retrofit.request.SignInRequest
 import com.hp.learnkotlin.ui.api.retrofit.response.SignInResponse
 import com.hp.learnkotlin.ui.api.retrofit.response.UserResponse
@@ -21,6 +22,9 @@ interface RetroApiService {
     @Authenticated
     suspend fun signIn(@Body signInRequest : SignInRequest) : Response<SignInResponse>
 
+    @GET("checkCrash/getError")
+    suspend fun checkError() : Response<String>
+
     @GET("usersByPager")
     suspend fun getUsersByPager(
         @Query("page") page : Int,
@@ -33,6 +37,7 @@ interface RetroApiService {
                 .client(
                     OkHttpClient.Builder()
                     .addInterceptor(AuthInterceptor())
+                        .addInterceptor(ResponseInterceptor())
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
                 )
@@ -48,3 +53,23 @@ interface RetroApiService {
 
 @Target(AnnotationTarget.FUNCTION)
 annotation class Authenticated
+
+suspend fun <T : Any> Response<T>.toResult(): Result<T> {
+    return try {
+        if (isSuccessful) {
+            val body = body()
+            if (body != null) {
+                Result.success(body)
+            } else {
+                Result.failure(Throwable("Response body is null"))
+            }
+        } else {
+            Log.e("Error","error din")
+            val errorBodyString = errorBody()?.string()
+            val errorMessage = errorBodyString ?: message()
+            Result.failure(Throwable(errorMessage))
+        }
+    } catch (e: Exception) {
+        Result.failure(e)
+    }
+}

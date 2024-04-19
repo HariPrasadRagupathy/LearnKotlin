@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -62,6 +63,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.hp.learnkotlin.ui.broadcasereceiver.BroadCastViewModel
 import com.hp.learnkotlin.ui.components.common.CommonSettings
+import com.hp.learnkotlin.ui.components.error.ErrorCheckScreen
 import com.hp.learnkotlin.ui.compose.addPadding
 import com.hp.learnkotlin.ui.nav.Screens
 import com.hp.learnkotlin.ui.pagger.presentation.UserScreen
@@ -143,6 +145,9 @@ fun DemoScreen(navController: NavController) {
                         IconButton(onClick = { screen = Screens.NotificationsScreen }) {
                             Icon(Icons.Default.Notifications, contentDescription = "notification")
                         }
+                        IconButton(onClick = { screen = Screens.ErrorScreen }) {
+                            Icon(Icons.Default.Warning, contentDescription = "notification")
+                        }
                     },
                     floatingActionButton = {
                         FloatingActionButton(
@@ -199,6 +204,10 @@ fun DemoScreen(navController: NavController) {
 
                     Screens.NotificationsScreen -> {
                         NotificationsContent()
+                    }
+                    
+                    Screens.ErrorScreen -> {
+                        ErrorCheckScreen()
                     }
 
                     else -> {}

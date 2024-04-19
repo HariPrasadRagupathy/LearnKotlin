@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.hp.learnkotlin.ui.components.DemoScreen
 import com.hp.learnkotlin.ui.components.LoginScreen
 import com.hp.learnkotlin.ui.components.SettingsScreen
+import com.hp.learnkotlin.ui.components.error.ErrorCheckScreen
 
 @Composable
 fun NavMain() {
@@ -39,6 +40,9 @@ fun NavMain() {
             composable(Screens.SettingScreen.route) {
                 SettingsScreen(navController = navController)
             }
+            /*composable(Screens.ErrorScreen.route) {
+                ErrorCheckScreen(navController = navController)
+            }*/
         }
     }
 
@@ -53,6 +57,8 @@ sealed class Screens(val route: String, val title: String = "") {
     object HomeScreen : Screens(route = "home_screen", title = "DashBoard")
     object CallScreen : Screens(route = "call_screen", title = "call")
     object NotificationsScreen : Screens(route = "notification_screen", title = "Notifications")
+
+    object ErrorScreen : Screens(route = "error_screen", title = "ErrorScreen")
     object SettingScreen : Screens(route = "settings_screen")
     object LoginScreen : Screens(route = "login_screen")
 }
