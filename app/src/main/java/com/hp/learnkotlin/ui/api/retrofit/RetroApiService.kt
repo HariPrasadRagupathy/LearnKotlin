@@ -1,5 +1,6 @@
 package com.hp.learnkotlin.ui.api.retrofit
 
+import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -8,6 +9,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.hp.learnkotlin.ui.api.retrofit.request.SignInRequest
+import com.hp.learnkotlin.ui.api.retrofit.request.SignUpRequest
 import com.hp.learnkotlin.ui.api.retrofit.response.SignInResponse
 import com.hp.learnkotlin.ui.api.retrofit.response.UserResponse
 import com.hp.learnkotlin.ui.pagger.remote.UserDto
@@ -25,12 +27,18 @@ import java.lang.reflect.Type
 
 interface RetroApiService {
 
+
+    @POST("signup")
+    suspend fun signUp(@Body signUpRequest : SignUpRequest) : Response<SignInResponse>
+
+
     @POST("signin")
-    @Authenticated
+    @Authenticate
     suspend fun signIn(@Body signInRequest : SignInRequest) : Response<SignInResponse>
 
-    @GET("checkCrash/getRespons")
-    suspend fun checkError() : Response<String>
+    @Authenticate
+    @GET("checkCrash/getResponse")
+    suspend fun checkError() : Response<SignInResponse>
 
     @GET("usersByPager")
     suspend fun getUsersByPager(
@@ -41,13 +49,13 @@ interface RetroApiService {
 
         private val gson: Gson = GsonBuilder()
             .create()
-        fun createClient() : RetroApiService{
+        fun createClient(context: Context) : RetroApiService{
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://192.168.1.8:8081/")
+                .baseUrl("http://192.168.1.10:8081/")
                 .client(
                     OkHttpClient.Builder()
-                    .addInterceptor(AuthInterceptor())
-                    .addInterceptor(ResponseInterceptor())
+                    .addInterceptor(AuthInterceptor(context))
+                    .addInterceptor(ResponseInterceptor(context))
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
                 )
@@ -75,15 +83,19 @@ class CustomDeserializer : JsonDeserializer<Any> {
 }
 
 @Target(AnnotationTarget.FUNCTION)
+annotation class Authenticate
+
+@Target(AnnotationTarget.FUNCTION)
 annotation class Authenticated
 
 fun <T : Any> Response<T>.toResult(): Result<T> {
     return try {
         if (isSuccessful) {
             val body = body()
+            val code = code()
 
             if (body != null && body !is DefaultErrorResponse) {
-                Log.e("response Data","->${body.toString()}")
+                Log.e("response Data","->${body.toString()}->code=$code")
 
                 Result.success(body)
             } else {

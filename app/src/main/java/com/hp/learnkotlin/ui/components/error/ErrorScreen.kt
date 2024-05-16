@@ -11,10 +11,10 @@ import androidx.navigation.NavController
 
 @Composable
 fun ErrorCheckScreen(viewModal: ErrorViewModal = hiltViewModel()) {
-    val errorData by viewModal.errorData.observeAsState(initial = Result.success("Data"))
-    val data = errorData.fold(onSuccess = { data -> "Success $data" }, onFailure = { "Error" })
+    val errorData by viewModal.errorData.observeAsState(initial = "Data")
+    //val data = errorData.fold(onSuccess = { data -> "Success $data" }, onFailure = { "Error" })
     Column {
-        Text(data ?: "Default")
+        Text(errorData ?: "Default")
         Button(onClick = { viewModal.checkError() }) {
             Text("Click")
         }

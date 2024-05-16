@@ -28,8 +28,8 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun getRetroApiService(): RetroApiService {
-        return RetroApiService.createClient()
+    fun getRetroApiService(@ApplicationContext context: Context): RetroApiService {
+        return RetroApiService.createClient(context)
     }
 
     @Singleton
