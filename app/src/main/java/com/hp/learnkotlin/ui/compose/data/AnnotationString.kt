@@ -1,6 +1,15 @@
 package com.hp.learnkotlin.ui.compose.data
 
 import android.util.Log
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.animateValue
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -111,6 +121,7 @@ fun AnnotatedStringParagraphStyle() {
             append("Line height styling is not applied here  in the area of the screen.")
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -145,6 +156,19 @@ fun AnnotatedStringSpanStyle() {
     val shadowStyle = styledSpan.copy(shadow = Shadow(color = Color.Gray, blurRadius = 10f, offset = Offset(2f, 2f)))
 
 
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val rotateAnimation = infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 2f ,
+        animationSpec = infiniteRepeatable(tween(1250, easing = LinearEasing), repeatMode = RepeatMode.Restart), label = ""
+    )
+    val colorSet1 = listOf(Color.Red, Color.Cyan, Color.Green)
+    val colorSet2 = listOf(Color.Green,Color.Red, Color.Cyan)
+    val colorSet3 = listOf(Color.Cyan, Color.Green,Color.Red)
+    val colorList = listOf(colorSet1, colorSet2, colorSet3)
+    val colorFullStyle = styledSpan.copy(brush = Brush.horizontalGradient(colors = colorList[rotateAnimation.value.toInt()]), fontSize = 18.sp)
+
+
     val annotatedString = buildAnnotatedString {
         withStyle(style = styledSpan) {
             append("Hello")
@@ -159,6 +183,10 @@ fun AnnotatedStringSpanStyle() {
         withStyle(style = shadowStyle) {
             append("Shadow")
         }
+        append("\n\n")
+        withStyle(style = colorFullStyle) {
+            append("New")
+        }
     }
 
     Column(
@@ -168,10 +196,36 @@ fun AnnotatedStringSpanStyle() {
     ) {
         Text(text = "Top check for triming the above Line")
         Text(text = annotatedString)
+        ColorChangingText("New")
     }
     /*   withStyle(style = SpanStyle(brush = Brush.horizontalGradient(listOf(Color.Red, Color.Cyan,
            Color.Green), startX = 10f), fontSize = 24.sp)){
            append("Color full text")
        }*/
 
+}
+
+
+@Composable
+fun ColorChangingText(text : String, color: List<Color>?=null){
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+
+    val animatedOffset by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 2000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ), label = ""
+    )
+
+    val colors = listOf(Color.Red, Color.Cyan, Color.Green)
+
+    val gradientBrush = Brush.horizontalGradient(
+        colors = colors,
+        startX = animatedOffset * 1000,
+        endX = (animatedOffset * 1000) + 1000
+    )
+
+    Text(text = "New", style = TextStyle(brush = gradientBrush))
 }
