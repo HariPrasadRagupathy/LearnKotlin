@@ -59,7 +59,8 @@ fun SampleLoginScreen1(viewModel: LoginViewModel = hiltViewModel()) {
             Text(text = state!!.errorMessage.toString())
         }
 
-        Text(BuildConfig.BASE_URL)
+
+        Text("Url : ${BuildConfig.BASE_URL}")
     }
 
 }
