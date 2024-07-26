@@ -35,7 +35,7 @@ fun SampleLoginScreen1(viewModel: LoginViewModel = hiltViewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Hello World ${BuildConfig.BASE_URL}")
+        Text("Hello World")
 
         Spacer(modifier = Modifier.height(verticalSpace))
 
@@ -58,6 +58,8 @@ fun SampleLoginScreen1(viewModel: LoginViewModel = hiltViewModel()) {
         AnimatedVisibility(visible = state!!.errorMessage != null) {
             Text(text = state!!.errorMessage.toString())
         }
+
+        Text(BuildConfig.BASE_URL)
     }
 
 }
