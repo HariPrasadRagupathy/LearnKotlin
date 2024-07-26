@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hp.learnkotlin.BuildConfig
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginEvent
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.viewmodels.LoginViewModel
 
@@ -34,7 +35,7 @@ fun SampleLoginScreen1(viewModel: LoginViewModel = hiltViewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Hello World")
+        Text("Hello World ${BuildConfig.BASE_URL}")
 
         Spacer(modifier = Modifier.height(verticalSpace))
 

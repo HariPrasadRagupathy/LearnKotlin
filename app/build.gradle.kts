@@ -26,15 +26,48 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "BASE_URL", "\"https://api.example.com/\"")
+    }
+
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            versionNameSuffix = "-dev"
+            applicationIdSuffix = ".dev"
+            buildConfigField("String", "BASE_URL", "\"https://api.example.com/dev\"")
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        create("qa") {
+            versionNameSuffix = "-qa"
+            applicationIdSuffix = ".qa"
+            buildConfigField("String", "BASE_URL", "\"https://api.example.com/qa\"")
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        create("prod") {
+            buildConfigField("String", "BASE_URL", "\"https://api.example.com/prod\"")
+        }
     }
 
     buildTypes {
+
+        debug {
+            productFlavors.filter { it.name == "prod" }.forEach{ _ ->
+                isMinifyEnabled = false
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+            }
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -46,6 +79,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"

@@ -29,6 +29,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         registerReceiver(
             airPlaneModeReceiver,
             //IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED),
