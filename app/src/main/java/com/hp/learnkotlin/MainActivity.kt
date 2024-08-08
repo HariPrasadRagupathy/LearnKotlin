@@ -18,6 +18,8 @@ import com.hp.learnkotlin.ui.broadcasereceiver.AirPlaneModeReceiver
 import com.hp.learnkotlin.ui.components.DemoScreen
 import com.hp.learnkotlin.ui.compose.LayoutLearn
 import com.hp.learnkotlin.ui.nav.NavMain
+import com.hp.learnkotlin.ui.notifications.AppNotification
+import com.hp.learnkotlin.ui.notifications.NotificationDemo
 import com.hp.learnkotlin.ui.observable.DemoObservable
 import com.hp.learnkotlin.ui.theme.LearnKotlinTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +30,7 @@ class MainActivity : ComponentActivity() {
     private val airPlaneModeReceiver = AirPlaneModeReceiver()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        AppNotification.createNotificationChannels(this)
 
 
         registerReceiver(
@@ -46,7 +48,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     //NavMain()
-                    NavSampleMain1()
+                   // NavSampleMain1()
+                    NotificationDemo()
                     //DemoScreen()
                     //LayoutLearn()
                    /* Column {

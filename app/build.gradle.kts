@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.hp.learnkotlin"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -29,7 +29,8 @@ android {
         buildConfigField("String", "BASE_URL", "\"https://api.example.com/\"")
     }
 
-    flavorDimensions += "environment"
+
+    flavorDimensions += listOf("market", "version")
 
     productFlavors {
         create("dev") {
@@ -37,14 +38,17 @@ android {
             applicationIdSuffix = ".dev"
             buildConfigField("String", "BASE_URL", "\"https://api.example.com/dev\"")
             signingConfig = signingConfigs.getByName("debug")
+            dimension = "market"
         }
         create("qa") {
             versionNameSuffix = "-qa"
             applicationIdSuffix = ".qa"
             buildConfigField("String", "BASE_URL", "\"https://api.example.com/qa\"")
             signingConfig = signingConfigs.getByName("debug")
+            dimension = "version"
         }
         create("prod") {
+            dimension = "version"
             buildConfigField("String", "BASE_URL", "\"https://api.example.com/prod\"")
         }
     }
