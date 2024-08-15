@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginEvent
+import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginNavigationEvent
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginState
 import com.hp.learnkotlin.samplecode1.repositories.SampleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,9 @@ class LoginViewModel @Inject constructor(
 
     private val _state = MutableLiveData(LoginState())
     val state : LiveData<LoginState> = _state
+
+    private val _navigationEvent = MutableLiveData<LoginNavigationEvent?>()
+    val navigationEvent : LiveData<LoginNavigationEvent?> = _navigationEvent
 
     fun onEvent(event: LoginEvent) {
         when (event) {
@@ -43,6 +47,7 @@ class LoginViewModel @Inject constructor(
             repository.signIn(_state.value!!.userName, _state.value!!.password).fold(
                 onSuccess = {
                     _state.value = _state.value!!.copy(isLoading = false, errorMessage = null)
+                    _navigationEvent.value = LoginNavigationEvent.NavigateToDashboard
                 },
                 onFailure = {
                     _state.value = _state.value!!.copy(isLoading = false, errorMessage = it.message)

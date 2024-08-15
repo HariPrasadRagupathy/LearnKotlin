@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         AppNotification.createNotificationChannels(this)
 
-
         registerReceiver(
             airPlaneModeReceiver,
             //IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED),
@@ -48,8 +47,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     //NavMain()
-                   // NavSampleMain1()
-                    NotificationDemo()
+                    NavSampleMain1()
+                   // NotificationDemo()
                     //DemoScreen()
                     //LayoutLearn()
                    /* Column {
