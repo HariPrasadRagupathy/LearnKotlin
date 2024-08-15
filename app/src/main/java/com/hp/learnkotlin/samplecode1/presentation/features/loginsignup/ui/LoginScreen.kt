@@ -19,11 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.hp.learnkotlin.samplecode1.presentation.common.nav.DASHBOARD_FEATURE
-import com.hp.learnkotlin.samplecode1.presentation.common.nav.DASHBOARD_SCREEN
+import com.hp.learnkotlin.samplecode1.presentation.common.nav.DASHBOARDSCREEN
+import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.DashboardState
 //import com.hp.learnkotlin.BuildConfig
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginEvent
-import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginNavigationEvent
+import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginNavigation
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.viewmodels.LoginViewModel
 
 
@@ -37,8 +37,10 @@ fun SampleLoginScreen1(viewModel: LoginViewModel = hiltViewModel(), navControlle
     val navigationEvent by viewModel.navigationEvent.observeAsState()
     LaunchedEffect(navigationEvent) {
         when (navigationEvent) {
-            LoginNavigationEvent.NavigateToDashboard -> navController.navigate(DASHBOARD_FEATURE)
-            else -> {}
+            LoginNavigation.NavigateToDashboard -> navController.navigate(DashboardState(defaultData = "Hari"))
+            LoginNavigation.NavigateToForgotPassword -> {}
+            LoginNavigation.NavigateToSignup -> {}
+            null -> {}
         }
     }
     // endregion Navigation

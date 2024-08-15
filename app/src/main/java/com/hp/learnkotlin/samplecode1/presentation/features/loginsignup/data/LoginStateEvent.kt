@@ -13,6 +13,8 @@ sealed class LoginEvent{
     object Submit : LoginEvent()
 }
 
-sealed class LoginNavigationEvent{
-    object NavigateToDashboard : LoginNavigationEvent()
+sealed class LoginNavigation{
+    object NavigateToDashboard : LoginNavigation()
+    object NavigateToSignup : LoginNavigation()
+    object NavigateToForgotPassword : LoginNavigation()
 }

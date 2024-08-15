@@ -10,11 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.hp.learnkotlin.samplecode1.presentation.common.nav.DASHBOARDSCREEN
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.viewmodels.DashboardViewModel
 
 @Composable
 fun DashBoardScreen1(
     viewModel: DashboardViewModel = hiltViewModel(),
+    data : DASHBOARDSCREEN,
     navController: NavController
 ){
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
