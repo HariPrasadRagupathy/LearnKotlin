@@ -16,7 +16,6 @@ import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.viewmode
 @Composable
 fun DashBoardScreen1(
     viewModel: DashboardViewModel = hiltViewModel(),
-    data : DASHBOARDSCREEN,
     navController: NavController
 ){
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {

@@ -37,7 +37,7 @@ fun SampleLoginScreen1(viewModel: LoginViewModel = hiltViewModel(), navControlle
     val navigationEvent by viewModel.navigationEvent.observeAsState()
     LaunchedEffect(navigationEvent) {
         when (navigationEvent) {
-            LoginNavigation.NavigateToDashboard -> navController.navigate(DashboardState(defaultData = "Hari"))
+            is LoginNavigation.NavigateToDashboard -> navController.navigate(DashboardState(defaultData = "Hari"))
             LoginNavigation.NavigateToForgotPassword -> {}
             LoginNavigation.NavigateToSignup -> {}
             null -> {}

@@ -12,14 +12,18 @@ import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.ui.Sampl
 import kotlinx.serialization.Serializable
 
 
-@Serializable object LoginSignupFeature
+@Serializable
+object LoginSignupFeature
 
-@Serializable object DashboardFeature
+@Serializable
+object DashboardFeature
 
 
-@Serializable object SAMPLELOGINSCREEN
+@Serializable
+object SAMPLELOGINSCREEN
 
-@Serializable data class DASHBOARDSCREEN(val data : String)
+@Serializable
+object DASHBOARDSCREEN
 
 
 @Composable
@@ -35,8 +39,8 @@ fun NavSampleMain1() {
         }
         navigation<DashboardFeature>(startDestination = DASHBOARDSCREEN){
             composable<DASHBOARDSCREEN> {
-                val args = it.toRoute<DASHBOARDSCREEN>()
-                DashBoardScreen1(navController = navController, data = args)
+                //val args = it.toRoute<DASHBOARDSCREEN>()
+                DashBoardScreen1(navController = navController)
             }
         }
     }
