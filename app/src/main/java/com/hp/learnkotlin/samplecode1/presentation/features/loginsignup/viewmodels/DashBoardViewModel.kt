@@ -3,7 +3,6 @@ package com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.viewmod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hp.learnkotlin.samplecode1.presentation.common.nav.DASHBOARDSCREEN
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.DashboardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

@@ -19,9 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.hp.learnkotlin.samplecode1.presentation.common.nav.DASHBOARDSCREEN
 import com.hp.learnkotlin.samplecode1.presentation.common.nav.DashboardFeature
-import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.DashboardState
+import com.hp.learnkotlin.samplecode1.presentation.common.nav.DashboardScreen
 //import com.hp.learnkotlin.BuildConfig
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginEvent
 import com.hp.learnkotlin.samplecode1.presentation.features.loginsignup.data.LoginNavigation
@@ -38,7 +37,7 @@ fun SampleLoginScreen1(viewModel: LoginViewModel = hiltViewModel(), navControlle
     val navigationEvent by viewModel.navigationEvent.observeAsState()
     LaunchedEffect(navigationEvent) {
         when (navigationEvent) {
-            LoginNavigation.NavigateToDashboard -> navController.navigate(DashboardFeature)
+            LoginNavigation.NavigateToDashboard -> navController.navigate(DashboardScreen(defaultData = "gfdg"))
             LoginNavigation.NavigateToForgotPassword -> {}
             LoginNavigation.NavigateToSignup -> {}
             null -> {}
